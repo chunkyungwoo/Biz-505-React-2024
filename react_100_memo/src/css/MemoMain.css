@@ -1,0 +1,13 @@
+.main {
+  width: 50vw;
+  margin: 10px auto;
+  display: flex;
+  gap: 5px;
+}
+.aside {
+  flex: 1;
+  padding: 5px;
+  &:nth-of-type(1) {
+    border-right: 1px solid #ddd;
+  }
+}
