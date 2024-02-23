@@ -1,4 +1,4 @@
-const MemoInput = () => {
+const MemoInput = ({ memoInsert }) => {
   return (
     <>
       <input type="text" placeholder="메모제목" />
