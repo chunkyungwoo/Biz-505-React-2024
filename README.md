@@ -14,3 +14,16 @@
 ### React 의 기본 Template(Sample)가 포함된 프로젝트 만들기
 
 - `npx create-react-app 프로젝트명`
+
+## NextJs 프로젝트
+
+- `React` 와 `NextJS` Framework 가 적용된 프로젝트 생성하기
+
+```bash
+npx create-next-app@latest [프로젝트명]
+npm init next-app [프로젝트명]
+yarn create-next-app [프로젝트명]
+```
+
+- 명령 실행후 옵션 선택하기
+  ![alt text](image.png)
