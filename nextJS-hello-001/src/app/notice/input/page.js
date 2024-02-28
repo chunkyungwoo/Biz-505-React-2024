@@ -1,6 +1,7 @@
 import styles from "@/css/notice.input.module.css";
 // api/notice.js 에 선언된 createNotice 함수를 사용하겠다
 import { createNotice } from "@/app/api/notice";
+import { redirect } from "next/navigation";
 
 /**
  * 공지사항 작성하기
@@ -15,11 +16,14 @@ export default () => {
     // action 에 의해서 전달된 formData 를 JSON type의 데이터로 변환하기
     const noticeData = {
       m_author: FormData.get("m_author"),
-      m_falg: FormData.get("m_flag"),
+      m_flag: FormData.get("m_flag"),
       m_subject: FormData.get("m_subject"),
       m_content: FormData.get("m_content"),
+      m_date: "2024-02-28",
+      m_time: "15:16:00",
     };
     await createNotice(noticeData);
+    redirect("/notice");
   };
 
   return (
@@ -38,9 +42,6 @@ export default () => {
           <option value="2">일반공지</option>
           <option value="3">지난공지</option>
         </select>
-      </div>
-      <div>
-        <input placeholder="중요도"></input>
       </div>
       <div>
         <input placeholder="제목" name="m_subject"></input>

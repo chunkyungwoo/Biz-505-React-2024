@@ -43,11 +43,11 @@ npx prisma init --datasource-provider mysql
 - DB 연결 초기화 하기 :
 
 ```bash
-`npx prisma generate`
+npx prisma generate
 ```
 
 - Table 생성하기 :
 
 ```bash
-`npx prisma migrate dev --name init`
+npx prisma migrate dev --name init
 ```
