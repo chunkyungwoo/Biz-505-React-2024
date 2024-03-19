@@ -1,0 +1,61 @@
+.main {
+  display: flex;
+  padding: 2rem;
+  /* min-height: 100vh; */
+}
+.main section {
+  flex: 1;
+  margin: 5px;
+  padding: 8px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  text-align: center;
+}
+.main section h1 {
+  color: #d35b5b;
+  padding: 5px;
+  margin: 5px;
+  background-color: black;
+  border-radius: 10px;
+  box-shadow: 1px 1px 1px 1px #ddd;
+}
+.main section li {
+  list-style: none;
+  text-align: center;
+  padding: 10px;
+  margin: 5px;
+  /* color: white; */
+  background-color: #ddd;
+  box-shadow: 1px 1px 1px 1px #ddd;
+  border-radius: 10px;
+}
+.main section li:nth-of-type(even) {
+  background-color: #ccc;
+}
+.main section li:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
+.list {
+  height: calc(100vh - 10px - 4rem);
+  overflow: auto;
+}
+.list::-webkit-scrollbar {
+  width: 10px;
+  background-color: transparent;
+}
+/* .list:hover::-webkit-scrollbar {
+  width: 10px;
+} */
+.list:hover::-webkit-scrollbar-thumb {
+  background-color: #ddd;
+}
+/* Table 세로화면으로 볼때 화면 구성 변경:반응형 */
+@media (max-width: 768px) {
+  .main {
+    flex-direction: column;
+  }
+  .main section:nth-of-type(1) {
+    order: 2;
+  }
+}
