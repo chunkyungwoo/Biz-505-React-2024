@@ -1,0 +1,9 @@
+.main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  overflow: hidden;
+  /* border: 1px solid green; */
+}
