@@ -1,5 +1,18 @@
 .main {
-  flex: 1;
+  display: flex;
   flex-direction: column;
   background-color: green;
+}
+.main input {
+  padding: 10px;
+  display: inline-block;
+}
+.main button {
+  display: inline-block;
+}
+.main form {
+  display: flex;
+}
+.mian li {
+  margin-left: 1.2rem;
 }
