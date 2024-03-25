@@ -59,3 +59,12 @@ absolute 성절을 사용할때는 반드시 명심해야 한다
   border-bottom: 2px solid blue;
   cursor: pointer;
 }
+
+.product_list {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.product {
+  margin-left: 20px;
+}
