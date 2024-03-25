@@ -16,3 +16,6 @@
 .mian li {
   margin-left: 1.2rem;
 }
+.div ul {
+  list-style: none;
+}

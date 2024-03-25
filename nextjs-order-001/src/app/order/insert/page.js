@@ -1,24 +1,22 @@
 "use client";
 import css from "@/css/insert.module.css";
-import { selectAll } from "@/app/api/product";
 import { useEffect, useState } from "react";
 
 const InsertPage = () => {
-  const [productList, setProductList] = useState([]);
-  useEffect(() => {
-    const searchInsertItem = async (c_code) => {
-      const result = await selectAll(c_code);
-      setProductList([...result]);
-    };
-    searchInsertItem();
-  }, []);
-  const searchList = productList.map((product) => {
-    return <li key={product.p_code}>{product.p_name}</li>;
-  });
-};
-const changeHandler = (e) => {
-  const { text } = e.target.value;
-  setSearch(text);
+  // const [productList, setProductList] = useState([]);
+  // useEffect(() => {
+  //   const searchInsertItem = async (c_code) => {
+  //     const result = await selectAll(c_code);
+  //     setProductList([...result]);
+  //   };
+  //   searchInsertItem();
+  // }, []);
+  // const searchList = productList.map((product) => {
+  //   return <li key={product.p_code}>{product.p_name}</li>;
+  // });
+  const changeHandler = (e) => {
+    const { text } = e.target.value;
+  };
   return (
     <>
       <h1 className="css.main">주문번호:O01001</h1>
@@ -26,7 +24,7 @@ const changeHandler = (e) => {
         <div>
           <input
             placeholder="고객코드"
-            value={product}
+            value
             onChange={changeHandler}
           />
         </div>
@@ -49,7 +47,7 @@ const changeHandler = (e) => {
       </div>
       <form className={css.form}>
         <div>
-          <input placeholder="상품코드" value={product} />
+          <input placeholder="상품코드" />
         </div>
         <div className={css.button}>
           <button>검색</button>
@@ -57,14 +55,14 @@ const changeHandler = (e) => {
       </form>
       <form className={css.form}>
         <div>
-          <input placeholder="주문수량" value={product} />
+          <input placeholder="주문수량" />
         </div>
         <div className={css.button}>
           <button>상품추가</button>
         </div>
       </form>
-      <div></div>
     </>
   );
 };
-export default OrderInsert;
+
+export default InsertPage;

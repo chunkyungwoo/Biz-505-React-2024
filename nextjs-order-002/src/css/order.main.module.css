@@ -1,0 +1,37 @@
+.main {
+  height: 100%;
+  width: 80%;
+  border: 1px solid blue;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.list {
+  height: 80%;
+  overflow: auto;
+  width: 80%;
+  margin: 5px auto;
+  background-color: #ddd;
+  list-style: none;
+}
+.list li {
+  padding: 5px;
+  width: 50%;
+  margin: 3px auto;
+}
+.link {
+  padding: 5px;
+  width: 80%;
+  margin: 0 auto;
+  text-align: right;
+}
+.link a {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: blue;
+  color: white;
+  border-radius: 10px;
+}
+.link a:hover {
+  opacity: 0.7;
+}
