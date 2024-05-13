@@ -4,7 +4,6 @@ import { styled } from "@mui/system";
 
 const RouletteContainer = styled(Box)({
   textAlign: "center",
-
   marginTop: "50px",
 });
 
@@ -24,22 +23,21 @@ const Roulette = () => {
 
     setResult(selectedOption);
   };
-};
-
-return (
-  <RouletteContainer>
-    <Typography variant="h4" gutterBottom>
-      Roulette
-    </Typography>
-    <Button variant="contained" onClick={spinRoulette}>
-      Spin
-    </Button>
-    {result && (
-      <Typography variant="h6" gutterBottom>
-        {`Selected Option: ${result}`}
+  return (
+    <RouletteContainer>
+      <Typography variant="h4" gutterBottom>
+        Roulette
       </Typography>
-    )}
-  </RouletteContainer>
-);
+      <Button variant="contained" onClick={spinRoulette}>
+        Spin
+      </Button>
+      {result && (
+        <Typography variant="h6" gutterBottom>
+          {`Selected Option: ${result}`}
+        </Typography>
+      )}
+    </RouletteContainer>
+  );
+};
 
 export default Roulette;
