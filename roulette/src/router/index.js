@@ -4,15 +4,15 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import roulette from "../roulette/roulette";
+import Roulette from "../roulette/Roulette";
 import App from "../App";
 
 const AppRouter = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" exact component={App} />
-        <Route path="/roulette" component={roulette} />
+        <Route path="/" exact element={<App />} />
+        <Route path="/roulette" element={<Roulette />} />
       </Routes>
     </Router>
   );

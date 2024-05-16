@@ -1,21 +1,12 @@
 import React from "react";
-import AppRouter from "./router";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import Roulette from "./roulette/Roulette";
 import "./App.css";
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" Component={<div>Home입니다.</div>} />
-          <Route
-            path="/roulette"
-            Component={<div>roulette입니다.</div>}
-          />
-          <Route path="/login" Component={<div>login입니다.</div>} />
-          <Route path="/join" Component={<div>join입니다.</div>} />
-        </Routes>
         <header className="header">
           <h1>뭐먹지</h1>
         </header>
@@ -35,8 +26,13 @@ function App() {
             </li>
           </ul>
         </nav>
+        <Routes>
+          <Route path="/" element={<div>Home</div>} />
+          <Route path="/roulette" element={<Roulette />} />
+          <Route path="/login" element={<div>login</div>} />
+          <Route path="/join" element={<div>join</div>} />
+        </Routes>
       </BrowserRouter>
-      <AppRouter />
     </>
   );
 }
