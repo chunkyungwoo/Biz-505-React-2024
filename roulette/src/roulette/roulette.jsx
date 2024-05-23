@@ -50,10 +50,6 @@ const Roulette = () => {
     setStartingOptionIndex(newPrizeNumber);
 
     setIsRotating(true);
-    // const newPrizeNumber = Math.floor(
-    //   Math.random() * categories.length
-    // );
-    // setPrizeNumber(newPrizeNumber);
 
     // 이전 타이머 취소
     if (timerId) {
@@ -72,39 +68,26 @@ const Roulette = () => {
     setTimerId(newTimerId);
   };
 
-  //   setTimeout(() => {
-  //     setIsRotating(false);
-  //     const adjustedPrizeNumber = adjustPrizeNumber(
-  //       newPrizeNumber,
-  //       categories.length
-  //     );
-  //     setResult(categories[adjustedPrizeNumber]);
-  //   }, rotateTime);
-  // };
-
   useEffect(() => {
     if (result) {
-      console.log(`Fetching data for category: ${result}`);
-      fetch(`/react/getCategory/${result}`, {
+      console.log(result);
+      fetch(`/food/react/getCategory/${result + ""}`, {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
       })
         .then((res) => {
-          console.log("Response status:", res.status);
-          console.log("Response headers:", res.headers);
           if (!res.ok) {
-            throw new Error("Network response was not ok");
+            throw new Error("Errorssss");
           }
           return res.json();
         })
         .then((newData) => {
-          console.log("Received data:", newData);
           setResultData(newData);
         })
         .catch((error) => {
-          console.error("Error fetching data:", error);
+          console.error("Errorrrrrr:", error);
         });
     }
   }, [result]);
@@ -115,15 +98,6 @@ const Roulette = () => {
       setHasSpun(false); // 알림 후 상태 초기화
     }
   }, [result, isRotating, hasSpun]);
-
-  // useEffect(() => {
-  //   if (!isRotating && hasSpun) {
-  //     const adjustedPrizeNumber =
-  //       (prizeNumber + Math.floor(categories.length / 2)) %
-  //       categories.length;
-  //     setResult(categories[adjustedPrizeNumber]);
-  //   }
-  // }, [prizeNumber, isRotating, hasSpun]);
 
   return (
     <RouletteContainer>
@@ -146,7 +120,6 @@ const Roulette = () => {
         onStopSpinning={() => {
           setIsRotating(false);
         }}
-        // key={startingOptionIndex}
       />
       {result && (
         <>
@@ -154,13 +127,10 @@ const Roulette = () => {
             {`Selected Option: ${result}`}
           </Typography>
           <Box sx={{ marginTop: "20px" }}>
-            <Typography variant="h5" gutterBottom>
-              결과 :
-            </Typography>
             <List>
               {resultData.length > 0 ? (
                 resultData.map((item, index) => (
-                  <ListItem key={index}>{item}</ListItem>
+                  <ListItem key={index}>{item.f_foodname}</ListItem>
                 ))
               ) : (
                 <ListItem>데이터 없음</ListItem>
