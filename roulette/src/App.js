@@ -13,21 +13,21 @@ function App() {
         <nav>
           <ul>
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/">홈</Link>
             </li>
             <li>
-              <Link to="/roulette">roulette</Link>
+              <Link to="/roulette">룰렛</Link>
             </li>
             <li>
-              <Link to="/login">login</Link>
+              <Link to="/login">로그인</Link>
             </li>
             <li>
-              <Link to="/join">join</Link>
+              <Link to="/join">회원가입</Link>
             </li>
           </ul>
         </nav>
         <Routes>
-          <Route path="/" element={<div>Home</div>} />
+          <Route path="/" element={<div>안녕</div>} />
           <Route path="/roulette" element={<Roulette />} />
           <Route path="/login" element={<div>login</div>} />
           <Route path="/join" element={<div>join</div>} />

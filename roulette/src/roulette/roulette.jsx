@@ -12,7 +12,11 @@ import { Wheel } from "react-custom-roulette";
 const RouletteContainer = styled(Box)({
   textAlign: "center",
   marginTop: "50px",
-  position: "relative",
+  // position: "relative",
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
 });
 
 const categories = [
@@ -37,11 +41,14 @@ const Roulette = () => {
   const [hasSpun, setHasSpun] = useState(false);
   const [timerId, setTimerId] = useState(null);
   const [resultData, setResultData] = useState([]);
+  const [randomItem, setRandomItem] = useState(null);
+  const [isSpinningAgain, setIsSpinningAgain] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const rotateTime = 8000;
 
   const startRotation = () => {
-    setResult(null);
+    // setResult(null);
     setHasSpun(true);
     const newPrizeNumber = Math.floor(
       Math.random() * categories.length
@@ -55,23 +62,35 @@ const Roulette = () => {
     if (timerId) {
       clearTimeout(timerId);
     }
-    // 새로운 타이머 설정
-    const newTimerId = setTimeout(() => {
-      setIsRotating(false);
-      const adjustedPrizeNumber = adjustPrizeNumber(
-        newPrizeNumber,
-        categories.length
-      );
-      setResult(categories[adjustedPrizeNumber]);
-    }, rotateTime);
-
-    setTimerId(newTimerId);
+    // // 새로운 타이머 설정
+    // const newTimerId = setTimeout(() => {
+    //   // setIsRotating(false);
+    //   const adjustedPrizeNumber = adjustPrizeNumber(
+    //     newPrizeNumber,
+    //     categories.length
+    //   );
+    //   // setResult(categories[adjustedPrizeNumber]);
+    //   const selectedOption = categories[adjustedPrizeNumber];
+    //   setResult(selectedOption);
+    //   setIsRotating(false); // 결과값 설정 후 룰렛 멈춤
+    // }, rotateTime);
+    // setTimerId(newTimerId);
+    // setIsRotating(true); // 룰렛 회전 시작
   };
+
+  useEffect(() => {
+    if (!isRotating && result !== null && hasSpun) {
+      alert(`Selected Option: ${result}`);
+      setHasSpun(false); // 알림 후 상태 초기화
+      // setIsRotating(false);
+      setIsSpinningAgain(false); // 회전을 다시 시작하지 않도록 isSpinningAgain 상태를 false로 설정
+    }
+  }, [result, isRotating, hasSpun]);
 
   useEffect(() => {
     if (result) {
       console.log(result);
-      fetch(`/food/react/getCategory/${result + ""}`, {
+      fetch(`/food/react/getCategory/${result}`, {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
@@ -92,24 +111,41 @@ const Roulette = () => {
     }
   }, [result]);
 
-  useEffect(() => {
-    if (!isRotating && result !== null && hasSpun) {
-      alert(`Selected Option: ${result}`);
-      setHasSpun(false); // 알림 후 상태 초기화
+  const handleSpinAgain = () => {
+    if (resultData.length > 0) {
+      setIsSpinningAgain(true);
+      let index = 0;
+      const intervalId = setInterval(() => {
+        setCurrentIndex(index);
+        index = (index + 1) % resultData.length;
+      }, 100);
+      setTimeout(() => {
+        clearInterval(intervalId);
+        const randomIndex = Math.floor(
+          Math.random() * resultData.length
+        );
+        setRandomItem(resultData[randomIndex]);
+        setIsSpinningAgain(false);
+      }, 3000);
     }
-  }, [result, isRotating, hasSpun]);
+  };
+  useEffect(() => {
+    if (randomItem) {
+      console.log("Random Item:", randomItem.f_foodname);
+    }
+  }, [randomItem]);
 
   return (
     <RouletteContainer>
       <Typography variant="h4" gutterBottom>
-        Roulette
+        돌림판
       </Typography>
       <Button
         variant="contained"
         onClick={startRotation}
         disabled={isRotating}
       >
-        Spin
+        돌려
       </Button>
       <Wheel // Wheel 컴포넌트 사용
         spinDuration={rotateTime / 8000}
@@ -119,33 +155,54 @@ const Roulette = () => {
         data={categories.map((category) => ({ option: category }))}
         onStopSpinning={() => {
           setIsRotating(false);
+          const adjustedPrizeNumber = adjustPrizeNumber(
+            prizeNumber,
+            categories.length
+          );
+          setResult(categories[adjustedPrizeNumber]);
         }}
       />
       {result && (
         <>
           <Typography variant="h6" gutterBottom>
-            {`Selected Option: ${result}`}
+            {`결과: ${result}`}
           </Typography>
-          <Box sx={{ marginTop: "20px" }}>
+          <Box
+            sx={{
+              marginTop: "20px",
+              height: "50px",
+              overflow: "hidden",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+            }}
+          >
             <List>
               {resultData.length > 0 ? (
-                resultData.map((item, index) => (
-                  <ListItem key={index}>{item.f_foodname}</ListItem>
-                ))
+                <ListItem>
+                  {resultData[currentIndex].f_foodname}
+                </ListItem>
               ) : (
                 <ListItem>데이터 없음</ListItem>
               )}
             </List>
           </Box>
+          {randomItem && (
+            <Typography variant="h6" gutterBottom>
+              {`결과: ${randomItem.f_foodname}`}
+            </Typography>
+          )}
         </>
       )}
       <Button
         variant="contained"
-        onClick={startRotation}
-        disabled={isRotating}
+        onClick={handleSpinAgain}
+        disabled={isRotating || resultData.length === 0}
         sx={{ marginTop: "20px" }}
       >
-        Spin Again
+        돌려
       </Button>
     </RouletteContainer>
   );

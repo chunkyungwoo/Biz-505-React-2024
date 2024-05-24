@@ -47,3 +47,15 @@ nav ul li a:hover {
 .spin-button {
   margin-top: 20px;
 }
+
+.spinning {
+  animation: spin 3s ease-out;
+}
+@keyframes spin {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
