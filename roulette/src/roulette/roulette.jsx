@@ -12,7 +12,6 @@ import { Wheel } from "react-custom-roulette";
 const RouletteContainer = styled(Box)({
   textAlign: "center",
   marginTop: "50px",
-  // position: "relative",
   position: "absolute",
   top: "50%",
   left: "50%",
@@ -27,61 +26,22 @@ const categories = [
   "양식",
   "패스트푸드",
 ];
-const adjustPrizeNumber = (prizeNumber, totalCategories) => {
-  return (
-    (prizeNumber + Math.floor(totalCategories / 2)) % totalCategories
-  );
-};
+// const adjustPrizeNumber = (prizeNumber, totalCategories) => {
+//   return (
+//     (prizeNumber + Math.floor(totalCategories / 2)) % totalCategories
+//   );
+// };
 
 const Roulette = () => {
   const [result, setResult] = useState(null);
   const [isRotating, setIsRotating] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
-  const [startingOptionIndex, setStartingOptionIndex] = useState(0);
   const [hasSpun, setHasSpun] = useState(false);
-  const [timerId, setTimerId] = useState(null);
   const [resultData, setResultData] = useState([]);
   const [randomItem, setRandomItem] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const rotateTime = 8000;
-
-  const startRotation = () => {
-    // setResult(null);
-    setHasSpun(true);
-    const newPrizeNumber = Math.floor(
-      Math.random() * categories.length
-    );
-    setPrizeNumber(newPrizeNumber);
-    setStartingOptionIndex(newPrizeNumber);
-
-    setIsRotating(true);
-
-    // 이전 타이머 취소
-    if (timerId) {
-      clearTimeout(timerId);
-    }
-    // 새로운 타이머 설정
-    const newTimerId = setTimeout(() => {
-      // setIsRotating(false);
-      const adjustedPrizeNumber = adjustPrizeNumber(
-        newPrizeNumber,
-        categories.length
-      );
-      // setResult(categories[adjustedPrizeNumber]);
-      const selectedOption = categories[adjustedPrizeNumber];
-      setResult(selectedOption);
-      setIsRotating(false); // 결과값 설정 후 룰렛 멈춤
-    }, rotateTime);
-    setTimerId(newTimerId);
-    // setIsRotating(true); // 룰렛 회전 시작
-  };
-
-  useEffect(() => {
-    if (!isRotating && result !== null && hasSpun) {
-      // setHasSpun(false); // 알림 후 상태 초기화
-    }
-  }, [result, isRotating, hasSpun]);
+  const rotateTime = 9000;
 
   useEffect(() => {
     if (result) {
@@ -107,13 +67,27 @@ const Roulette = () => {
     }
   }, [result]);
 
+  const startRotation = () => {
+    setHasSpun(true);
+    const newPrizeNumber = Math.floor(
+      Math.random() * categories.length
+    );
+    setPrizeNumber(newPrizeNumber);
+    setIsRotating(true);
+
+    setResult(categories[newPrizeNumber]);
+    setTimeout(() => {
+      setIsRotating(false);
+    }, rotateTime);
+  };
+
   const handleSpinAgain = () => {
     if (resultData.length > 0) {
       let index = 0;
       const intervalId = setInterval(() => {
         setCurrentIndex(index);
         index = (index + 1) % resultData.length;
-      }, 100);
+      }, 50); // setInterval 간격을 더 작게 조정
       setTimeout(() => {
         clearInterval(intervalId);
         const randomIndex = Math.floor(
@@ -123,6 +97,7 @@ const Roulette = () => {
       }, 3000);
     }
   };
+
   useEffect(() => {
     if (randomItem) {
       console.log("Random Item:", randomItem.f_foodname);
@@ -141,18 +116,13 @@ const Roulette = () => {
       >
         돌려
       </Button>
-      <Wheel // Wheel 컴포넌트 사용
-        spinDuration={rotateTime / 8000}
-        startingOptionIndex={startingOptionIndex}
+      <Wheel
+        spinDuration={rotateTime}
+        startingOptionIndex={0}
         mustStartSpinning={isRotating}
         prizeNumber={prizeNumber}
         data={categories.map((category) => ({ option: category }))}
         onStopSpinning={() => {
-          // const adjustedPrizeNumber = adjustPrizeNumber(
-          //   prizeNumber,
-          //   categories.length
-          // );
-          // setResult(categories[adjustedPrizeNumber]);
           setIsRotating(false);
         }}
       />
@@ -193,7 +163,7 @@ const Roulette = () => {
       <Button
         variant="contained"
         onClick={handleSpinAgain}
-        disabled={isRotating || resultData.length === 0}
+        disabled={isRotating}
         sx={{ marginTop: "20px" }}
       >
         돌려

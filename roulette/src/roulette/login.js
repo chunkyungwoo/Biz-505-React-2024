@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useUserContext } from "../provider/UserProvider";
 
 const Login = () => {
-  const { user } = useUserContext();
+  const { user, setUser } = useUserContext();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
