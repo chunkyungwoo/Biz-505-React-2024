@@ -42,7 +42,6 @@ const Roulette = () => {
   const [timerId, setTimerId] = useState(null);
   const [resultData, setResultData] = useState([]);
   const [randomItem, setRandomItem] = useState(null);
-  const [isSpinningAgain, setIsSpinningAgain] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const rotateTime = 8000;
@@ -62,28 +61,25 @@ const Roulette = () => {
     if (timerId) {
       clearTimeout(timerId);
     }
-    // // 새로운 타이머 설정
-    // const newTimerId = setTimeout(() => {
-    //   // setIsRotating(false);
-    //   const adjustedPrizeNumber = adjustPrizeNumber(
-    //     newPrizeNumber,
-    //     categories.length
-    //   );
-    //   // setResult(categories[adjustedPrizeNumber]);
-    //   const selectedOption = categories[adjustedPrizeNumber];
-    //   setResult(selectedOption);
-    //   setIsRotating(false); // 결과값 설정 후 룰렛 멈춤
-    // }, rotateTime);
-    // setTimerId(newTimerId);
+    // 새로운 타이머 설정
+    const newTimerId = setTimeout(() => {
+      // setIsRotating(false);
+      const adjustedPrizeNumber = adjustPrizeNumber(
+        newPrizeNumber,
+        categories.length
+      );
+      // setResult(categories[adjustedPrizeNumber]);
+      const selectedOption = categories[adjustedPrizeNumber];
+      setResult(selectedOption);
+      setIsRotating(false); // 결과값 설정 후 룰렛 멈춤
+    }, rotateTime);
+    setTimerId(newTimerId);
     // setIsRotating(true); // 룰렛 회전 시작
   };
 
   useEffect(() => {
     if (!isRotating && result !== null && hasSpun) {
-      alert(`Selected Option: ${result}`);
-      setHasSpun(false); // 알림 후 상태 초기화
-      // setIsRotating(false);
-      setIsSpinningAgain(false); // 회전을 다시 시작하지 않도록 isSpinningAgain 상태를 false로 설정
+      // setHasSpun(false); // 알림 후 상태 초기화
     }
   }, [result, isRotating, hasSpun]);
 
@@ -113,7 +109,6 @@ const Roulette = () => {
 
   const handleSpinAgain = () => {
     if (resultData.length > 0) {
-      setIsSpinningAgain(true);
       let index = 0;
       const intervalId = setInterval(() => {
         setCurrentIndex(index);
@@ -125,7 +120,6 @@ const Roulette = () => {
           Math.random() * resultData.length
         );
         setRandomItem(resultData[randomIndex]);
-        setIsSpinningAgain(false);
       }, 3000);
     }
   };
@@ -154,12 +148,12 @@ const Roulette = () => {
         prizeNumber={prizeNumber}
         data={categories.map((category) => ({ option: category }))}
         onStopSpinning={() => {
+          // const adjustedPrizeNumber = adjustPrizeNumber(
+          //   prizeNumber,
+          //   categories.length
+          // );
+          // setResult(categories[adjustedPrizeNumber]);
           setIsRotating(false);
-          const adjustedPrizeNumber = adjustPrizeNumber(
-            prizeNumber,
-            categories.length
-          );
-          setResult(categories[adjustedPrizeNumber]);
         }}
       />
       {result && (
