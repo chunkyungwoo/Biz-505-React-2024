@@ -1,0 +1,76 @@
+.join-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.join-container h2 {
+  text-align: center;
+  color: #333;
+}
+
+.join-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.join-container label {
+  margin-top: 10px;
+  color: #555;
+}
+
+.join-container input[type="text"],
+.join-container input[type="password"],
+.join-container select,
+.join-container button[type="button"] {
+  margin-top: 5px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.join-container input[type="text"]:focus,
+.join-container input[type="password"]:focus,
+.join-container select:focus {
+  border-color: #888;
+  outline: none;
+}
+
+.join-container button[type="submit"],
+.join-container button[type="button"] {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.join-container button[type="submit"]:hover,
+.join-container button[type="button"]:hover {
+  background-color: #ccc;
+}
+
+.join-container .error-message {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.join-container ul {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.join-container ul li {
+  background-color: #e0e0e0;
+  padding: 5px;
+  border-radius: 4px;
+  margin-bottom: 5px;
+  text-align: center;
+}

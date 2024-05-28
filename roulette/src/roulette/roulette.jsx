@@ -36,9 +36,9 @@ const Roulette = () => {
   const [result, setResult] = useState(null);
   const [isRotating, setIsRotating] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
-  const [hasSpun, setHasSpun] = useState(false);
+  // const [hasSpun, setHasSpun] = useState(false);
   const [resultData, setResultData] = useState([]);
-  const [randomItem, setRandomItem] = useState(null);
+  // const [randomItem, setRandomItem] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const rotateTime = 9000;
@@ -67,18 +67,21 @@ const Roulette = () => {
     }
   }, [result]);
 
+  console.log(resultData);
+
   const startRotation = () => {
-    setHasSpun(true);
+    // setHasSpun(true);
+    setIsRotating(true); // 룰렛이 돌기 시작함을 설정
     const newPrizeNumber = Math.floor(
       Math.random() * categories.length
     );
     setPrizeNumber(newPrizeNumber);
-    setIsRotating(true);
-
-    setResult(categories[newPrizeNumber]);
-    setTimeout(() => {
-      setIsRotating(false);
-    }, rotateTime);
+    // setIsRotating(true);
+    // setResult(categories[newPrizeNumber]);
+    // setTimeout(() => {
+    //   setResult(categories[newPrizeNumber]); // 결과 값을 설정
+    //   setIsRotating(false); // 룰렛 멈춤을 설정
+    // });
   };
 
   const handleSpinAgain = () => {
@@ -93,16 +96,16 @@ const Roulette = () => {
         const randomIndex = Math.floor(
           Math.random() * resultData.length
         );
-        setRandomItem(resultData[randomIndex]);
+        setResult(resultData[randomIndex].f_foodname);
       }, 3000);
     }
   };
 
-  useEffect(() => {
-    if (randomItem) {
-      console.log("Random Item:", randomItem.f_foodname);
-    }
-  }, [randomItem]);
+  // useEffect(() => {
+  //   if (randomItem) {
+  //     console.log("Random Item:", randomItem.f_foodname);
+  //   }
+  // }, [randomItem]);
 
   return (
     <RouletteContainer>
@@ -117,19 +120,20 @@ const Roulette = () => {
         돌려
       </Button>
       <Wheel
-        spinDuration={rotateTime}
-        startingOptionIndex={0}
+        // spinDuration={rotateTime}
         mustStartSpinning={isRotating}
         prizeNumber={prizeNumber}
         data={categories.map((category) => ({ option: category }))}
         onStopSpinning={() => {
           setIsRotating(false);
+          setResult(categories[prizeNumber]);
         }}
       />
       {result && (
         <>
           <Typography variant="h6" gutterBottom>
-            {`결과: ${result}`}
+            {/* {`결과: ${result}`} */}
+            음식 골라줘?
           </Typography>
           <Box
             sx={{
@@ -144,7 +148,8 @@ const Roulette = () => {
             }}
           >
             <List>
-              {resultData.length > 0 ? (
+              {resultData.length > 0 &&
+              currentIndex < resultData.length ? (
                 <ListItem>
                   {resultData[currentIndex].f_foodname}
                 </ListItem>
@@ -153,21 +158,21 @@ const Roulette = () => {
               )}
             </List>
           </Box>
-          {randomItem && (
-            <Typography variant="h6" gutterBottom>
-              {`결과: ${randomItem.f_foodname}`}
-            </Typography>
-          )}
+          <Typography variant="h6" gutterBottom>
+            {`결과: ${result}`}
+          </Typography>
         </>
       )}
-      <Button
-        variant="contained"
-        onClick={handleSpinAgain}
-        disabled={isRotating}
-        sx={{ marginTop: "20px" }}
-      >
-        돌려
-      </Button>
+      {!isRotating && result && (
+        <Button
+          variant="contained"
+          onClick={handleSpinAgain}
+          // disabled={isRotating}
+          sx={{ marginTop: "20px" }}
+        >
+          눌러
+        </Button>
+      )}
     </RouletteContainer>
   );
 };

@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { useUserContext } from "../provider/UserProvider";
+import "../css/login.css";
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
   const { user, setUser } = useUserContext();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
   const handleLogin = async () => {
     try {
       const response = await fetch("/api/login", {
@@ -23,7 +26,7 @@ const Login = () => {
     }
   };
   return (
-    <div>
+    <div className="form-container">
       {user ? (
         <div>
           <h2>Welcome, {user}</h2>

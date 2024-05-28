@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import "../css/join.css";
 const Join = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedFoods, setSelectedFoods] = useState([]);
@@ -17,7 +19,7 @@ const Join = () => {
       const response = await fetch("/api/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password, email }),
       });
       if (!response.ok) {
         throw new Error("회원가입 실패");
@@ -41,9 +43,11 @@ const Join = () => {
     }
   };
   return (
-    <div>
+    <div className="join-container">
       <h2>회원가입</h2>
-      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+      {errorMessage && (
+        <p className="error-message">{errorMessage}</p>
+      )}
       <form onSubmit={handleSubmit}>
         <div>
           <label>아이디:</label>
@@ -70,17 +74,8 @@ const Join = () => {
           />
         </div>
         <div>
-          <label>좋아하는 음식:</label>
-          <select
-            multiple
-            value={selectedFoods}
-            onChange={handleFoodChange}
-          >
-            <option value="pizza">피자</option>
-            <option value="burger">버거</option>
-            <option value="sushi">스시</option>
-            <option value="pasta">파스타</option>
-          </select>
+          <label>이메일:</label>
+          <input type="text" value={email} />
         </div>
         <div>
           <input
