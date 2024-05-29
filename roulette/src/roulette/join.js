@@ -15,8 +15,13 @@ const Join = () => {
       setErrorMessage("비밀번호가 일치하지않습니다.");
       return;
     }
+    // 클라이언트에서 간단한 이메일 유효성 검사
+    if (!email.includes("@")) {
+      setErrorMessage("유효한 이메일 주소를 입력하세요.");
+      return;
+    }
     try {
-      const response = await fetch("/api/signup", {
+      const response = await fetch("/user/join", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password, email }),
@@ -28,14 +33,7 @@ const Join = () => {
       setErrorMessage("회원가입 실패");
     }
   };
-  const handleFoodChange = (e) => {
-    const selectedOptions = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value
-    );
 
-    setSelectedFoods(selectedOptions);
-  };
   const handleAddFood = () => {
     if (selectedFoodInput.trim() !== "") {
       setSelectedFoods([...selectedFoods, selectedFoodInput]);
@@ -75,9 +73,14 @@ const Join = () => {
         </div>
         <div>
           <label>이메일:</label>
-          <input type="text" value={email} />
+          <input
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
         <div>
+          <label>좋아하는 음식:</label>
           <input
             type="text"
             value={selectedFoodInput}

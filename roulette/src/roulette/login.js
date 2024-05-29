@@ -25,6 +25,7 @@ const Login = () => {
       setErrorMessage("아이디/비밀번호 오류");
     }
   };
+
   return (
     <div className="form-container">
       {user ? (
@@ -36,21 +37,29 @@ const Login = () => {
         <div>
           <h2>로그인</h2>
           {errorMessage && (
-            <p style={{ color: "red" }}>{errorMessage}</p>
+            <p className="error-message">{errorMessage}</p>
           )}
-          <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button onClick={handleLogin}>로그인</button>
+          <div className="input-group">
+            <label>아이디:</label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="아이디를 입력하세요"
+            />
+          </div>
+          <div className="input-group">
+            <label>비밀번호:</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="비밀번호를 입력하세요"
+            />
+          </div>
+          <div className="button-container">
+            <button onClick={handleLogin}>로그인</button>
+          </div>
         </div>
       )}
     </div>

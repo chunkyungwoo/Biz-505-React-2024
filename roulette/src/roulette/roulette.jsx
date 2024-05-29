@@ -40,12 +40,16 @@ const Roulette = () => {
   const [resultData, setResultData] = useState([]);
   // const [randomItem, setRandomItem] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [showList, setShowList] = useState(true);
+  const [showMessage, setShowMessage] = useState(false); // "맛있게 먹어~" 메시지
+  const [showSpinButton, setShowSpinButton] = useState(true); // "눌러" 버튼 표시
+  const [showResetButton, setShowResetButton] = useState(false); // "다시 돌리기" 버튼 표시
+  const [showPrompt, setShowPrompt] = useState(true); // "음식 골라줘?" 문구
 
   const rotateTime = 9000;
 
   useEffect(() => {
     if (result) {
-      console.log(result);
       fetch(`/food/react/getCategory/${result}`, {
         headers: {
           "Content-Type": "application/json",
@@ -67,6 +71,7 @@ const Roulette = () => {
     }
   }, [result]);
 
+  console.log(result);
   console.log(resultData);
 
   const startRotation = () => {
@@ -97,6 +102,11 @@ const Roulette = () => {
           Math.random() * resultData.length
         );
         setResult(resultData[randomIndex].f_foodname);
+        setShowList(false); // 결과가 나온 후 List 숨김
+        setShowMessage(true); // "맛있게 먹어~" 메시지 표시
+        setShowSpinButton(false); // "눌러" 버튼 숨김
+        setShowResetButton(true); // "다시 돌리기" 버튼 표시
+        setShowPrompt(false); // "음식 골라줘?" 문구 숨김
       }, 3000);
     }
   };
@@ -106,6 +116,9 @@ const Roulette = () => {
   //     console.log("Random Item:", randomItem.f_foodname);
   //   }
   // }, [randomItem]);
+  const handleReset = () => {
+    window.location.reload(); // 페이지 새로고침
+  };
 
   return (
     <RouletteContainer>
@@ -116,11 +129,15 @@ const Roulette = () => {
         variant="contained"
         onClick={startRotation}
         disabled={isRotating}
+        sx={{
+          display: showSpinButton ? "inline-flex" : "none",
+          backgroundColor: "#333",
+          "&:hover": { backgroundColor: "#555" },
+        }}
       >
         돌려
       </Button>
       <Wheel
-        // spinDuration={rotateTime}
         mustStartSpinning={isRotating}
         prizeNumber={prizeNumber}
         data={categories.map((category) => ({ option: category }))}
@@ -129,48 +146,73 @@ const Roulette = () => {
           setResult(categories[prizeNumber]);
         }}
       />
+      {result && showPrompt && (
+        <Typography variant="h6" gutterBottom>
+          음식 골라줘?
+        </Typography>
+      )}
       {result && (
         <>
-          <Typography variant="h6" gutterBottom>
-            {/* {`결과: ${result}`} */}
-            음식 골라줘?
-          </Typography>
-          <Box
-            sx={{
-              marginTop: "20px",
-              height: "50px",
-              overflow: "hidden",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              border: "1px solid #ccc",
-              borderRadius: "4px",
-            }}
-          >
-            <List>
-              {resultData.length > 0 &&
-              currentIndex < resultData.length ? (
-                <ListItem>
-                  {resultData[currentIndex].f_foodname}
-                </ListItem>
-              ) : (
-                <ListItem>데이터 없음</ListItem>
-              )}
-            </List>
-          </Box>
+          {showList && (
+            <Box
+              sx={{
+                marginTop: "20px",
+                height: "50px",
+                overflow: "hidden",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+              }}
+            >
+              <List>
+                {resultData.length > 0 &&
+                currentIndex < resultData.length ? (
+                  <ListItem>
+                    {resultData[currentIndex].f_foodname}
+                  </ListItem>
+                ) : (
+                  <ListItem>데이터 없음</ListItem>
+                )}
+              </List>
+            </Box>
+          )}
           <Typography variant="h6" gutterBottom>
             {`결과: ${result}`}
           </Typography>
+          {showMessage && (
+            <Typography variant="h5" gutterBottom>
+              맛있게 먹어~
+            </Typography>
+          )}
         </>
       )}
       {!isRotating && result && (
         <Button
           variant="contained"
           onClick={handleSpinAgain}
-          // disabled={isRotating}
-          sx={{ marginTop: "20px" }}
+          sx={{
+            marginTop: "20px",
+            display: showSpinButton ? "inline-flex" : "none",
+            backgroundColor: "#333",
+            "&:hover": { backgroundColor: "#555" },
+          }}
         >
           눌러
+        </Button>
+      )}
+      {showResetButton && (
+        <Button
+          variant="contained"
+          onClick={handleReset}
+          sx={{
+            marginTop: "20px",
+            backgroundColor: "#333",
+            "&:hover": { backgroundColor: "#555" },
+          }}
+        >
+          다시 돌리기
         </Button>
       )}
     </RouletteContainer>

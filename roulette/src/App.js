@@ -12,24 +12,26 @@ function App() {
       <BrowserRouter>
         <UserContextProvider>
           <header className="header">
-            <h1>뭐먹지</h1>
+            <div className="header-content">
+              <h1>뭐먹지</h1>
+              <nav>
+                <ul>
+                  <li>
+                    <Link to="/">홈</Link>
+                  </li>
+                  <li>
+                    <Link to="/roulette">룰렛</Link>
+                  </li>
+                  <li>
+                    <Link to="/login">로그인</Link>
+                  </li>
+                  <li>
+                    <Link to="/join">회원가입</Link>
+                  </li>
+                </ul>
+              </nav>
+            </div>
           </header>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">홈</Link>
-              </li>
-              <li>
-                <Link to="/roulette">룰렛</Link>
-              </li>
-              <li>
-                <Link to="/login">로그인</Link>
-              </li>
-              <li>
-                <Link to="/join">회원가입</Link>
-              </li>
-            </ul>
-          </nav>
           <Routes>
             <Route path="/" element={<div>안녕</div>} />
             <Route path="/roulette" element={<Roulette />} />

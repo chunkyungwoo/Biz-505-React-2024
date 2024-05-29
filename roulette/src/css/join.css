@@ -1,6 +1,7 @@
 .join-container {
   max-width: 400px;
   margin: 0 auto;
+  margin-top: 90px;
   padding: 20px;
   background-color: #f5f5f5;
   border-radius: 8px;
@@ -15,11 +16,15 @@
 .join-container form {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .join-container label {
   margin-top: 10px;
   color: #555;
+  text-align: right;
+  width: 200px;
+  flex: 1;
 }
 
 .join-container input[type="text"],
@@ -27,6 +32,25 @@
 .join-container select,
 .join-container button[type="button"] {
   margin-top: 5px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  flex: 2;
+  box-sizing: border-box;
+}
+.join-container form > div {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.join-container form > div > label {
+  width: 200px;
+  margin-right: 10px;
+}
+
+.join-container form > div > input[type="text"],
+.join-container form > div > button[type="button"] {
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -42,7 +66,7 @@
 .join-container button[type="submit"],
 .join-container button[type="button"] {
   margin-top: 15px;
-  padding: 10px;
+  padding: 10px 20px;
   background-color: #333;
   color: white;
   border: none;
@@ -52,7 +76,7 @@
 
 .join-container button[type="submit"]:hover,
 .join-container button[type="button"]:hover {
-  background-color: #ccc;
+  background-color: #555;
 }
 
 .join-container .error-message {
@@ -73,4 +97,17 @@
   border-radius: 4px;
   margin-bottom: 5px;
   text-align: center;
+}
+.join-container form > div:nth-of-type(5) {
+  display: flex;
+  width: 400px;
+  label {
+    flex: 2;
+  }
+  input {
+    flex: 2;
+  }
+  button {
+    flex: 1;
+  }
 }
