@@ -21,7 +21,7 @@ const Join = () => {
       return;
     }
     try {
-      const response = await fetch("/user/join", {
+      const response = await fetch("/react/user/join", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password, email }),
