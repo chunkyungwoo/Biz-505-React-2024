@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import Roulette from "./roulette/Roulette";
+import Roulette from "./roulette/roulette";
 import Login from "./roulette/login";
 import Join from "./roulette/join";
 import { UserContextProvider } from "./provider/UserProvider";

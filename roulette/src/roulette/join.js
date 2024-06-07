@@ -21,14 +21,19 @@ const Join = () => {
       return;
     }
     try {
-      const response = await fetch("/user/join", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password, email }),
-      });
+      const response = await fetch(
+        "http://localhost:8080/user/join",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password, email }),
+        }
+      );
       if (!response.ok) {
         throw new Error("회원가입 실패");
       }
+      const data = await response.json();
+      alert("회원가입 성공");
     } catch (error) {
       setErrorMessage("회원가입 실패");
     }
