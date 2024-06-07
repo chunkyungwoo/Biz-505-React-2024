@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../css/join.css";
+
 const Join = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -15,7 +16,6 @@ const Join = () => {
       setErrorMessage("비밀번호가 일치하지않습니다.");
       return;
     }
-    // 클라이언트에서 간단한 이메일 유효성 검사
     if (!email.includes("@")) {
       setErrorMessage("유효한 이메일 주소를 입력하세요.");
       return;
@@ -24,6 +24,7 @@ const Join = () => {
       const response = await fetch(
         "http://localhost:8080/user/join",
         {
+          // 백엔드 URL 정확히 지정
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, password, email }),
@@ -32,8 +33,9 @@ const Join = () => {
       if (!response.ok) {
         throw new Error("회원가입 실패");
       }
-      const data = await response.json();
-      alert("회원가입 성공");
+      const data = await response.json(); // JSON 응답 처리
+      alert("회원가입 성공!");
+      // 추가: 유저 정보 저장 등 상태 관리
     } catch (error) {
       setErrorMessage("회원가입 실패");
     }
@@ -45,6 +47,7 @@ const Join = () => {
       setSelectedFoodInput("");
     }
   };
+
   return (
     <div className="join-container">
       <h2>회원가입</h2>

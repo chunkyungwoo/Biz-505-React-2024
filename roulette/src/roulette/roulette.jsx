@@ -75,18 +75,11 @@ const Roulette = () => {
   console.log(resultData);
 
   const startRotation = () => {
-    // setHasSpun(true);
     setIsRotating(true); // 룰렛이 돌기 시작함을 설정
     const newPrizeNumber = Math.floor(
       Math.random() * categories.length
     );
     setPrizeNumber(newPrizeNumber);
-    // setIsRotating(true);
-    // setResult(categories[newPrizeNumber]);
-    // setTimeout(() => {
-    //   setResult(categories[newPrizeNumber]); // 결과 값을 설정
-    //   setIsRotating(false); // 룰렛 멈춤을 설정
-    // });
   };
 
   const handleSpinAgain = () => {
@@ -111,11 +104,6 @@ const Roulette = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (randomItem) {
-  //     console.log("Random Item:", randomItem.f_foodname);
-  //   }
-  // }, [randomItem]);
   const handleReset = () => {
     window.location.reload(); // 페이지 새로고침
   };
